@@ -1,0 +1,108 @@
+<html>
+    <body id = "main">
+        <div id = "head">
+            <p id = "title">
+                Block Jump
+            </p>
+        </div>
+        <div id = 'nav'>
+            <a href="index.html">
+                <div id = "home">
+                    Home
+                </div>
+            </a>
+            <a href="game.html">
+                <div id = "play">
+                    Play
+                </div>
+            </a>
+            <a href="about.html">
+                <div id = "play">
+                    About
+                </div>
+            </a>
+            <a href="howtoplay.html">
+                <div id = "how">
+                    How To Play
+                </div>
+            </a>
+            
+            
+            
+            
+        </div>
+        <div id = "info"> 
+            <p>
+                Press Either the Arrow Up, Space or W key to Jump over the obstacles
+                <div>
+                    <img src = "Assets/ezgif.com-gif-maker.gif" id = "ex1">
+                    <img src = "Assets/Jumpboard.jpg" id = "ex2">
+                </div>
+            </p>
+            <p>
+                Press Either the Arrow Left or A key to move left
+                <div>
+                    <img src = "Assets/keyD.png" id = "ex3">
+                </div>
+            </p>
+            <p>
+                Press Either the Arrow Right or D key to move right
+                <div>
+                    <img src = "Assets/KeyA.png" id = "ex4">
+                </div>
+            </p>
+        </div>
+    </body>
+</html>
+
+<style>
+    #ex1{
+        width: 15%;
+    }
+    #ex2,#ex3,#ex4{
+        width: 30%
+    }
+    a{
+        color: inherit;
+        text-decoration: inherit;
+    }
+    #info{
+        background-color: gray;
+        margin-top: 1%;
+        margin-left: auto;
+        margin-right: auto;
+        width: 70%;
+        border-radius: 15px 15px 15px 15px;
+        text-align: center;
+        font-size: 2.5vh;
+    }
+    #nav{
+        text-align: center;
+        background-color: rgba(255, 255, 255, .4);
+        
+    }
+    #home, #play, #how, #about{
+        display: inline-block;
+        font-size: 2.3vh;
+        width: 15%;
+    }
+    #home:hover,#play:hover,#how:hover, #about:hover{
+        user-select: none;
+        background-color: rgba(255, 255, 255, .4);;
+        cursor:pointer;
+    }
+    #title{
+        font-size: 4vh;
+    }
+    #main{
+        font-family: sans-serif;
+        background-image: url("Assets/Back.png");;
+        color: white;
+    }
+    #head{
+        background-color: gray;
+        height: 10%;
+        text-align: center;
+    }
+</style>
+

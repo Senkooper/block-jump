@@ -1,0 +1,302 @@
+<html>
+    <body id = "main">
+        <div id = "head">
+            <p>
+                s
+            </p>
+            <p id = "title">
+                Block Jump
+            </p>
+        </div>
+        <div id = 'nav'>
+            <a href="index.html">
+                <div id = "home">
+                    Home
+                </div>
+            </a>
+            <a href="game.html">
+                <div id = "play">
+                    Play
+                </div>
+            </a>
+            <a href="about.html">
+                <div id = "play">
+                    About
+                </div>
+            </a>
+            <a href="howtoplay.html">
+                <div id = "how">
+                    How To Play
+                </div>
+            </a>
+        </div>
+        <a href="#canvas" id = "link">
+            <div id = "scrll" onclick="shift()">
+                <img src="Assets/arrow.png" style="width: inherit; height: inherit;">
+            </div>
+        </a>
+        <canvas id = "canvas",tabindex="1"></canvas>
+        <div id = "score">
+            Score
+        </div>
+    </body>
+</html>
+
+<script>
+    clicked = 0;
+    topofScreen = 0;
+    function shift(){
+        if (clicked == 1){
+            document.getElementById('link').href = "#head"
+            clicked = 0;
+            
+            return;
+        }
+        clicked = 1;
+        document.getElementById('link').href = "#score";
+    }
+</script>
+
+<style>
+    html {
+        scroll-behavior: smooth;
+    }   
+
+    #scrll{
+        position:fixed;
+        top: 0;
+        border-radius: 0px 0px 15px 15px;
+        text-align: center;
+        right: 45%;
+        width: 10%;
+        background-color: white;
+        color: black;
+        
+    }
+    a{
+        color: inherit;
+        text-decoration: inherit;
+    }
+    #score{
+        font-size: 2.5vh;
+        background-color: gray;
+    }
+    #canvas{
+        width: 100%;
+    }
+    #nav{
+        text-align: center;
+        background-color: rgba(255, 255, 255, .4);
+        
+    }
+    #home, #play, #how, #about{
+        display: inline-block;
+        font-size: 2.3vh;
+        width: 15%;
+    }
+    #home:hover,#play:hover,#how:hover, #about:hover{
+        user-select: none;
+        background-color: rgba(255, 255, 255, .4);
+        cursor:pointer;
+    }
+  
+
+    #title{
+        font-size: 4vh;
+    }
+    #main{
+        font-family: sans-serif;
+        background-color: black;
+        color: white;
+    }
+    #head{
+        background-color: gray;
+        height: 10%;
+        text-align: center;
+    }
+</style>
+
+
+
+
+
+<script>
+        const canvas = document.querySelector('canvas');
+        const ctx = canvas.getContext('2d'),
+        charApear = new Image();
+        charApear.src = "Assets/norm.png";
+        
+        //ctx.imageSmoothingEnabled = false
+        keys = []
+        obst = []
+        plr = [0,0,0,0,10,10]
+    
+        document.onkeydown = function (key) {
+		key.preventDefault();
+            if (!keys.find(e => e == key.code)){
+                keys.push(key.code);
+            }
+            
+        }
+        document.onkeyup = function (key) {
+            if (keys.find(e => e == key.code)){
+                keys.splice(keys.indexOf(key.code),1)
+            }
+            
+        }
+        count = 0;
+        function screenBound(obj){
+            if (obj[0] < -1){
+                obj[0] = 0
+            }
+            else if((obj[0]+obj[4]) > canvas.width){
+                obj[0] = canvas.width - obj[4]
+            }
+        }
+        function boxCollide(obj, objs){
+            for (obj2 of objs){
+                if (((obj[0] + obj[4]) >= obj2[0]) && (obj[0] <= (obj2[0] + obj2[4]))){
+                    if (((obj[1] + obj[5]) >= obj2[1]) && (obj[1] <= (obj2[5] + obj2[1]))){
+                        return 1;
+                    }
+                }
+            }
+            return 0;
+        }
+        gravVel = 0.981
+        function gravity(obj){
+            obj[3]++
+            if (obj[2] > 0){
+                
+                obj[2] = obj[2]  / (obj[3]*gravVel)
+                if (obj[2] <= gravVel){
+                    obj[2] = 0
+                    obj[3] = 0
+                }
+                else{
+                    obj[1] -= obj[2]
+                 }
+                        
+            }
+            else{
+                console.log(obj[1])
+                obj[1] += obj[3] * gravVel // * 2
+                if (obj[1] >= canvas.height - obj[5]){
+                    obj[3] = 0
+                    obj[1] = canvas.height - obj[5]
+                            
+                }
+            }
+        }
+        function spawn(){
+            if (Math.floor(Math.random() * (9)) == 5){
+                if (obst.length >= 1){
+                    if (((obst[obst.length-1][0] + 50) < (canvas.width - 10)) || Math.floor(Math.random() * 7) == 3){
+                        randHeight = Math.floor(Math.random() * 25 + 10)
+                        obst.push([canvas.width,canvas.height - randHeight,0,0,10,randHeight])
+                    }
+                }
+                else{
+                    obst.push([canvas.width,canvas.height - 10,0,0,10,10])
+                }
+                
+                
+            
+            }
+            
+        }
+        score = 0
+        TopSocre = 0
+        Level = 0
+        FrameSpeed = 40
+        function Update(){
+            score += FrameSpeed
+            Level += FrameSpeed
+            if (Math.floor(Level / (400000 / FrameSpeed))){
+                Level = 0
+                if (FrameSpeed - 10 > 10){
+                    FrameSpeed -= Math.floor((40 / FrameSpeed))
+                    console.log(FrameSpeed)
+                    clearInterval(upt)
+                    upt = setInterval(Update,FrameSpeed)
+                }
+                
+            }
+          
+            spawn()
+            document.getElementById('score').innerHTML = "Score: " + String(score)
+            if (TopSocre > 0){
+                document.getElementById('score').innerHTML += " Top Score: " + String(TopSocre)
+            }
+            for (key of keys){
+                switch(key){
+                    case "Space":
+                    case "ArrowUp":
+                    case "KeyW":{
+                        if (plr[1] == canvas.height -10){
+                        plr[2] = 3*9.81
+                        }
+                        
+                        break;
+                    }
+                    case "KeyA":
+                    case "ArrowLeft":{
+                        plr[0] -= 3
+                        break
+                    }
+                    case "KeyD":
+                    case "ArrowRight":{
+                        plr[0] += 3
+                        break
+                    }
+                    default:
+                        keys.splice(keys.indexOf(key),1)
+                }
+            }
+            ctx.fillStyle = 'black'
+            ctx.fillRect(0,0,canvas.width,canvas.height)
+            
+            screenBound(plr)
+            
+            for (obj of obst){
+                if (obj[0] + obj[4] < 0){
+                    obst.splice(obst.indexOf(obj),1)
+                }
+                else{
+                    obj[0] -= 5
+                }
+            }
+            if ((boxCollide(plr,obst) == 0)||(plr[2] > 0)){
+                gravity(plr)
+             
+            }
+           
+            else{
+                if (TopSocre < score){
+                    TopSocre = score
+                }
+                score = 0
+                FrameSpeed = 40
+                Level = 0
+                plr[0] = 0
+                plr[1] = 0
+                clearInterval(upt)
+                upt = setInterval(Update,FrameSpeed)
+                
+            }
+            ctx.fillStyle = 'green'
+            for (obj of obst){
+                ctx.fillRect(obj[0],obj[1],obj[4],obj[5])
+            }
+            ctx.drawImage(charApear,plr[0],plr[1],plr[4],plr[5]);
+        }
+
+        var upt = setInterval(Update,FrameSpeed)
+       
+    
+</script>
+
+
+
+
+

@@ -1,0 +1,91 @@
+<html>
+    <body id = "main">
+        <div id = "head">
+            <p id = "title">
+                Block Jump
+            </p>
+        </div>
+        <img src = "Assets/Logo.png" id = "logo">
+        <a href="game.html">
+            <div id = "play">
+                Play
+            </div>
+        </a>
+       
+        <a href="howtoplay.html">
+            <div id = "how">
+                How To Play
+            </div>
+            
+        </a>
+        <a href="about.html">
+            <div id = "about">
+                About
+            </div>
+        </a>
+        
+        
+        
+    </body>
+</html>
+
+<style>
+    a{
+        color: inherit;
+        text-decoration: inherit;
+    }
+    #logo{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1%;
+        width: 15%;
+        height: inherit;
+        border-radius: 15px 15px 15px 15px;
+       
+    }
+
+    #play,
+    #how,
+    #about{
+        margin: auto;
+        width: 20%;    
+        background: grey;
+
+        border-radius: 15px 15px 15px 15px;
+        font-size: 4vh;
+        text-align: center;
+    }
+
+    #play,#how,#about{
+        margin-top: 1%;
+    }
+    #play:hover,#how:hover,#about:hover{
+        user-select: none;
+        border-style: solid;
+        opacity: .9;
+        cursor:pointer;
+    }
+    #play:active,#how:active,#about:active{
+        color: blueviolet;
+    }
+
+    #title{
+        font-size: 4vh;
+    }
+    #main{
+        font-family: sans-serif;
+        background-image: url("Assets/Back.png");
+        color: white;
+    }
+    #head{
+        background-color: gray;
+        height: 15%;
+        text-align: center;
+    }
+</style>
+
+
+
+
+
